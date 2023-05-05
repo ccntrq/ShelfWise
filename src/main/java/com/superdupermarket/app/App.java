@@ -2,8 +2,7 @@ package com.superdupermarket.app;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-
-import com.superdupermarket.app.ProductFactory.ProductType;
+import java.util.List;
 
 /**
  * Hello world!
@@ -11,7 +10,7 @@ import com.superdupermarket.app.ProductFactory.ProductType;
  */
 public class App {
     public static void main(String[] args) {
-        Product[] products = App.defaultProducts();
+        List<Product> products = new StaticProductRepository().fetchProducts();
 
         LocalDate checkDate = LocalDate.now();
         boolean done;
@@ -41,15 +40,4 @@ public class App {
         ArrayListTable.printTable(fullDailyReport);
     }
 
-    public static Product[] defaultProducts() {
-        LocalDate today = LocalDate.now();
-
-        Product[] products = {
-                ProductFactory.createProduct(ProductType.CHEESE, "Cheddar", today, 399, 50, today.plusDays(10)),
-                ProductFactory.createProduct(ProductType.CHEESE, "Parmigiano", today, 475, 50, today.plusDays(55)),
-                ProductFactory.createProduct(ProductType.WINE, "Riesling", today, 1099, 25, null),
-        };
-
-        return products;
-    }
 }
