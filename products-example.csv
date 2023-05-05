@@ -1,0 +1,5 @@
+type,name,base_price,quality,expiration_date,shelf_date
+CHEESE,Cheddar,5.0,40,2023-06-30,
+CHEESE,Gouda,6.0,50,2023-07-10,
+WINE,Red Wine,10.0,20,,
+WINE,White Wine,12.0,30,,2023-01-01
