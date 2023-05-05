@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
-import com.superdupermarket.app.ProductFactory.ProductType;
-
 public class StaticProductRepository implements ProductRepository {
 
     @Override

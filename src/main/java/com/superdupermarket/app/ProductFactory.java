@@ -4,10 +4,6 @@ import java.time.LocalDate;
 
 public class ProductFactory {
 
-    public enum ProductType {
-        CHEESE, WINE
-    }
-
     public static Product createProduct(
             ProductType productType,
             String label,
