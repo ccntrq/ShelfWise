@@ -10,7 +10,12 @@ import java.util.List;
  */
 public class App {
     public static void main(String[] args) {
-        List<Product> products = new StaticProductRepository().fetchProducts();
+
+        ProductRepository repo = args.length == 0
+                ? new StaticProductRepository()
+                : new CSVProductRepository(args[0]);
+
+        List<Product> products = repo.fetchProducts();
 
         LocalDate checkDate = LocalDate.now();
         boolean done;
