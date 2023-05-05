@@ -1,6 +1,9 @@
 package com.superdupermarket.app;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 abstract public class Product {
@@ -38,11 +41,12 @@ abstract public class Product {
     }
 
     public String[] showDailyReport(LocalDate checkDate) {
+        DateTimeFormatter germanDateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String[] report = {
                 this.label,
                 Integer.toString(this.quality(checkDate)),
                 Double.toString(this.dayPrice(checkDate) / 100.0),
-                this.expiration.map(exp -> exp.toString()).orElse("---"),
+                this.expiration.map(exp -> exp.format(germanDateFormatter)).orElse("----------"),
                 this.shouldDispose(checkDate) ? "Entsorgen" : "Ok" };
         return report;
     }
