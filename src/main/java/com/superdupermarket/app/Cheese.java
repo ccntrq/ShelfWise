@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class Cheese extends Product {
-    private static int minimumbaseQuality = 30;
+    private static final int MINIMUM_BASE_QUALITY = 30;
 
     public Cheese(
             String label,
@@ -16,13 +16,13 @@ public class Cheese extends Product {
     }
 
     @Override
-    boolean shouldDispose(LocalDate checkDate) {
-        return this.quality(checkDate) < Cheese.minimumbaseQuality
+    public boolean shouldDispose(LocalDate checkDate) {
+        return this.quality(checkDate) < Cheese.MINIMUM_BASE_QUALITY
                 || this.expiration.map(expiration -> !expiration.isAfter(checkDate)).orElse(false);
     }
 
     @Override
-    int quality(LocalDate checkDate) {
+    public int quality(LocalDate checkDate) {
         long daysBetween = ChronoUnit.DAYS.between(this.shelfDate, checkDate);
         return (int) Math.max(baseQuality - daysBetween, 0);
     }

@@ -16,12 +16,12 @@ public class Wine extends Product {
     }
 
     @Override
-    boolean shouldDispose(LocalDate date) {
+    public boolean shouldDispose(LocalDate date) {
         return this.baseQuality < 0;
     }
 
     @Override
-    int quality(LocalDate checkDate) {
+    public int quality(LocalDate checkDate) {
         if (checkDate.isAfter(this.shelfDate)) {
             long daysBetween = ChronoUnit.DAYS.between(this.shelfDate, checkDate);
             return (int) Math.min(baseQuality + daysBetween / 10, 50);

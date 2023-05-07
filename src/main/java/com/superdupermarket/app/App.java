@@ -15,34 +15,23 @@ public class App {
                 ? new StaticProductRepository()
                 : new CSVProductRepository(args[0]);
 
+        DailyReportPrinter reportPrinter = new DailyReportPrinter();
         List<Product> products = repo.fetchProducts();
 
         LocalDate checkDate = LocalDate.now();
-        boolean done;
+        boolean done = false;
         do {
-            done = true;
-            ArrayList<String[]> fullDailyReport = new ArrayList<>();
-            System.out.println("Date: " + checkDate);
-
-            for (Product prod : products) {
-                fullDailyReport.add(prod.showDailyReport(checkDate));
-                if (!prod.shouldDispose(checkDate)) {
-                    done = false;
-                }
+            LocalDate finalLocalDate = checkDate; // Create final local copy to allow use in lambda
+            if (products.stream().allMatch(prod -> prod.shouldDispose(finalLocalDate))) {
+                done = true;
             }
 
-            App.printReport(fullDailyReport);
-            System.out.println();
+            reportPrinter.printDailyReport(products, checkDate);
 
+            // proceed to next day
+            System.out.println();
             checkDate = checkDate.plusDays(1);
         } while (!done && checkDate.isBefore(LocalDate.now().plusYears(1)));
 
     }
-
-    public static void printReport(ArrayList<String[]> fullDailyReport) {
-        String[] headings = { "Name", "Qualität", "Preis", "Verfallsdatum", "Produktstatus" };
-        fullDailyReport.add(0, headings);
-        ArrayListTable.printTable(fullDailyReport);
-    }
-
 }

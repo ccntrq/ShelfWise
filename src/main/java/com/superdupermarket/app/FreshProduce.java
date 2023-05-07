@@ -22,13 +22,13 @@ public class FreshProduce extends Product {
     }
 
     @Override
-    boolean shouldDispose(LocalDate checkDate) {
+    public boolean shouldDispose(LocalDate checkDate) {
         // Disposal is only dependent on the expiration date for fresh produce
         return this.expiration.isPresent() && checkDate.isAfter(this.expiration.get());
     }
 
     @Override
-    int quality(LocalDate checkDate) {
+    public int quality(LocalDate checkDate) {
         // FreshProduce does not change its quality over time. The quality is
         // based on the size and looks of the product when it is shelved. There
         // can even be negative qualities for damaged or bruised fruit.

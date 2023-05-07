@@ -1,19 +1,18 @@
 package com.superdupermarket.app;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 abstract public class Product {
-    protected String label;
+    public final String label;
     // base price in cents
-    protected int basePrice;
-    protected int baseQuality;
+    public final int basePrice;
+    public final int baseQuality;
     // products that don't expire will have `empty()` here
-    protected Optional<LocalDate> expiration;
-    protected LocalDate shelfDate;
+    public final Optional<LocalDate> expiration;
+    public final LocalDate shelfDate;
 
-    protected Product(
+    public Product(
             String label,
             LocalDate shelfDate,
             int basePrice,
@@ -32,18 +31,7 @@ abstract public class Product {
         return this.basePrice + this.quality(checkDate) * 10;
     }
 
-    public String[] showDailyReport(LocalDate checkDate) {
-        DateTimeFormatter germanDateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String[] report = {
-                this.label,
-                Integer.toString(this.quality(checkDate)),
-                Double.toString(this.dayPrice(checkDate) / 100.0),
-                this.expiration.map(exp -> exp.format(germanDateFormatter)).orElse("----------"),
-                this.shouldDispose(checkDate) ? "Entsorgen" : "Ok" };
-        return report;
-    }
+    public abstract boolean shouldDispose(LocalDate checkDate);
 
-    abstract boolean shouldDispose(LocalDate checkDate);
-
-    abstract int quality(LocalDate checkDate);
+    public abstract int quality(LocalDate checkDate);
 }
