@@ -20,6 +20,9 @@ public class ProductFactory {
             case WINE:
                 product = new Wine(label, shelfDate, basePrice, baseQuality);
                 break;
+            case FRESH_PRODUCE:
+                product = new FreshProduce(label, shelfDate, basePrice, baseQuality, expirationDate);
+                break;
             default:
                 throw new IllegalArgumentException("Invalid product type: " + productType);
         }

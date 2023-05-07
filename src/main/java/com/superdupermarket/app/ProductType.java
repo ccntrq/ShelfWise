@@ -1,5 +1,5 @@
 package com.superdupermarket.app;
 
 public enum ProductType {
-    CHEESE, WINE
+    CHEESE, WINE, FRESH_PRODUCE
 }
