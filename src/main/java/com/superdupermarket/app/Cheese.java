@@ -16,11 +16,6 @@ public class Cheese extends Product {
     }
 
     @Override
-    public String toString() {
-        return "Cheese-" + super.toString();
-    }
-
-    @Override
     boolean shouldDispose(LocalDate checkDate) {
         return this.quality(checkDate) < Cheese.minimumbaseQuality
                 || this.expiration.map(expiration -> !expiration.isAfter(checkDate)).orElse(false);

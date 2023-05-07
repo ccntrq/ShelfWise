@@ -9,11 +9,6 @@ public class Wine extends Product {
     }
 
     @Override
-    public String toString() {
-        return "Wine-" + super.toString();
-    }
-
-    @Override
     public int dayPrice(LocalDate checkDate) {
         // The price for Wine is based on the baseQuality not the actual quality. This
         // differs from other products

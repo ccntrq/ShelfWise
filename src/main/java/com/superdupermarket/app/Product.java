@@ -32,12 +32,6 @@ abstract public class Product {
         return this.basePrice + this.quality(checkDate) * 10;
     }
 
-    @Override
-    public String toString() {
-        return "Product [label=" + label + ", basePrice=" + basePrice + ", baseQuality=" + baseQuality + ", expiration="
-                + expiration + "]";
-    }
-
     public String[] showDailyReport(LocalDate checkDate) {
         DateTimeFormatter germanDateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String[] report = {
