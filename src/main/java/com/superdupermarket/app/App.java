@@ -1,5 +1,6 @@
 package com.superdupermarket.app;
 
+import java.security.InvalidParameterException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +11,21 @@ import java.util.List;
  */
 public class App {
     public static void main(String[] args) {
+        ProductRepository repo;
+        if (args.length > 0) {
+            String file = args[0];
 
-        ProductRepository repo = args.length == 0
-                ? new StaticProductRepository()
-                : new CSVProductRepository(args[0]);
+            if (file.endsWith(".csv")) {
+                repo = new CSVProductRepository(args[0]);
+
+            } else if (file.endsWith(".db") || file.endsWith(".sqlite")) {
+                repo = new SQLiteProductRepository(args[0]);
+            } else {
+                throw new InvalidParameterException("Unsupported filetype: " + file);
+            }
+        } else {
+            repo = new StaticProductRepository();
+        }
 
         DailyReportPrinter reportPrinter = new DailyReportPrinter();
         List<Product> products = repo.fetchProducts();
