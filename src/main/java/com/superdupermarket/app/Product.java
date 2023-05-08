@@ -11,27 +11,38 @@ abstract public class Product {
     // products that don't expire will have `empty()` here
     public final Optional<LocalDate> expiration;
     public final LocalDate shelfDate;
+    protected final PriceStrategy priceStrategy;
+    protected final QualityStrategy qualityStrategy;
+    protected final DisposalStrategy disposalStrategy;
 
     public Product(
             String label,
             LocalDate shelfDate,
             int basePrice,
             int baseQuality,
-            LocalDate expiration) {
+            LocalDate expiration,
+            PriceStrategy priceStrategy,
+            QualityStrategy qualityStrategy,
+            DisposalStrategy disposalStrategy) {
         this.label = label;
         this.shelfDate = shelfDate;
         this.basePrice = basePrice;
         this.baseQuality = baseQuality;
         this.expiration = Optional.ofNullable(expiration);
+        this.priceStrategy = priceStrategy;
+        this.qualityStrategy = qualityStrategy;
+        this.disposalStrategy = disposalStrategy;
     }
 
     public int dayPrice(LocalDate checkDate) {
-        // The day price is the basePrice plus an additional 10 cents for each
-        // point of quality
-        return this.basePrice + this.quality(checkDate) * 10;
+        return this.priceStrategy.calculatePrice(this, checkDate);
     }
 
-    public abstract boolean shouldDispose(LocalDate checkDate);
+    public boolean shouldDispose(LocalDate checkDate) {
+        return this.disposalStrategy.shouldDispose(this, checkDate);
+    }
 
-    public abstract int quality(LocalDate checkDate);
+    public int quality(LocalDate checkDate) {
+        return this.qualityStrategy.calculateQuality(this, checkDate);
+    }
 }
