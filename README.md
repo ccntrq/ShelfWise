@@ -15,3 +15,9 @@ mvn compile exec:java -Dexec.mainClass="com.superdupermarket.app.App"
 ```bash
 mvn compile exec:java -Dexec.mainClass="com.superdupermarket.app.App" -Dexec.args="products-example.csv"
 ```
+
+**Using SQLiteProductRepository to read products from a given sqlite database:**
+
+```bash
+mvn compile exec:java -Dexec.mainClass="com.superdupermarket.app.App" -Dexec.args="products-example.db"
+```
