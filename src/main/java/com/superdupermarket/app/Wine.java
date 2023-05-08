@@ -1,7 +1,6 @@
 package com.superdupermarket.app;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 public class Wine extends Product {
     public Wine(String label, LocalDate shelfDate, int basePrice, int baseQuality) {
